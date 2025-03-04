@@ -2,3 +2,4 @@ code,display,definition,normalized_code,category_column,display_es
 code4,First Code,Description for the first code,C001,Category A,Primer Código;Initio Codio
 code2,Second Code,Description for the second code,C002,Category B,Segundo Código
 code3,Third Code,Description for the third code,C003,Category A,Tercer Código
+testCode,Test Code,,,,
