@@ -97,11 +97,11 @@ class FshCodeSystem:
                         self.codes[prop_code]['properties'] = {}
                     p = self.codes[prop_code]['properties']
                 if 'code' == prop_name:
-                  pc = prop_value
+                  pc = prop_value[1:]
                 elif 'valueCode' == prop_name:
                   pv = prop_value[1:]
                 else:
-                  pv = prop_value
+                  pv = prop_value.strip('"')
                 if pc and pv:
                     p[pc] = pv
             
@@ -204,7 +204,7 @@ class FshCodeSystem:
         
         # Mark codes as inactive if they're not in the updated data
         for code in existing_codes - updated_codes:
-            self.codes[code]['status'] = 'inactive'
+            self.codes[code]['properties']['inactive'] = "true"
 
     def save_fsh(self, output_path: Optional[str] = None):
         """Save the updated CodeSystem to FSH file."""
@@ -250,14 +250,8 @@ class FshCodeSystem:
             
             content.append(code_line)
             
-            # Add inactive status if needed
-            idx = '0'
-            if code_info['status'] == 'inactive':
-                content.append(f"* #{code} ^property[{idx}].code = #inactive")
-                content.append(f"* #{code} ^property[=].valueBoolean = true")
-                idx = '+'
-            
             # Add properties
+            idx = '0'
             for prop_name, prop_value in sorted(code_info['properties'].items()):
                 type = prop_type[prop_name] if prop_name in prop_type else "string"
                 content.append(f"* #{code} ^property[{idx}].code = #{prop_name}")
