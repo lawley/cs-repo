@@ -1,0 +1,43 @@
+name: Sample automation for maintaining a CodeSystem
+
+on:
+  push:
+    branches:
+      - main  # Runs when pushing to main branch
+  pull_request:
+    branches:
+      - main  # Runs on PRs to main branch
+  workflow_dispatch:  # Allows manual trigger
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest  # Use the latest Ubuntu runner
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}  # Allows pushing changes
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"  # Change to your required version
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt  # Ensure you have a requirements.txt
+
+      - name: Run genfsh.py
+        run: python genfsh.py --fsh codesystem.fsh --data codes.csv --config config.json --output codesystem.fsh
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Commit and push changes
+        run: |
+          git add -u .  # Only add existing files
+          git commit -m "Automated update from GitHub Actions" || echo "No changes to commit"
+          git push
