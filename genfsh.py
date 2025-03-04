@@ -22,7 +22,7 @@ class FshCodeSystem:
         self.url = ""
         self.version = ""
         self.elements = {}  # self.fields -> ...
-        self.codes = {}  # code -> {display, status, properties, designations}
+        self.codes = {}  # code -> {display, properties, designations}
         self.properties = {}  # name -> {description, type}
         self.extra_metadata = {}
         self.load_fsh()
@@ -81,7 +81,6 @@ class FshCodeSystem:
                 self.codes[code] = {
                     'display': display,
                     'definition': definition if definition else None,
-                    'status': 'active',
                     'properties': {},
                     'designations': []
                 }
@@ -156,7 +155,6 @@ class FshCodeSystem:
                 self.codes[code] = {
                     'display': row[display_column],
                     'definition': row[definition_column] if definition_column and definition_column in row and isinstance(row[definition_column], str) else None,
-                    'status': 'active',
                     'properties': {},
                     'designations': []
                 }
@@ -165,7 +163,6 @@ class FshCodeSystem:
                 self.codes[code]['display'] = row[display_column]
                 if definition_column and definition_column in row:
                     self.codes[code]['definition'] = row[definition_column]
-                self.codes[code]['status'] = 'active'
                 # clear previous properties and designations
                 self.codes[code]['properties'] = {}
                 self.codes[code]['designations'] = []
