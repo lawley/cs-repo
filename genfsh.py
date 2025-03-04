@@ -80,7 +80,7 @@ class FshCodeSystem:
                 code, display, definition = match.groups()
                 self.codes[code] = {
                     'display': display,
-                    'definition': definition if definition else '',
+                    'definition': definition if definition else None,
                     'status': 'active',
                     'properties': {},
                     'designations': []
@@ -155,7 +155,7 @@ class FshCodeSystem:
                 # New code
                 self.codes[code] = {
                     'display': row[display_column],
-                    'definition': row[definition_column] if definition_column and definition_column in row else None,
+                    'definition': row[definition_column] if definition_column and definition_column in row and isinstance(row[definition_column], str) else None,
                     'status': 'active',
                     'properties': {},
                     'designations': []
