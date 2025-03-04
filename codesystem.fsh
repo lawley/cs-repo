@@ -55,3 +55,4 @@ Description: "A simple example CodeSystem in FSH format."
 * #code4 ^designation[+].value = "Initio Codio"
 * #code4 ^designation[=].language = "es"
 * #code4 ^designation[=].use = #display
+* #testCode "Test Code"
