@@ -1,0 +1,3 @@
+pandas
+openpyxl  # Required for reading Excel files
+bottleneck >= 1.3.6

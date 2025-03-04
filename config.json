@@ -1,0 +1,21 @@
+{
+  "codeColumn": "code",
+  "displayColumn": "display",
+  "definitionColumn": "definition",
+  "additionalDisplays": [
+    {
+      "column": "display_es",
+      "language": "es",
+      "use": "display",
+      "separator": ";"
+    },
+    {
+      "column": "display_fr",
+      "language": "fr"
+    }
+  ],
+  "propertyMappings": {
+    "normalizedCode": "normalized_code",
+    "category": "category_column"
+  }
+}
